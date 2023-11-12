@@ -40,10 +40,9 @@ def get_state(ser=None):
     responses = _send_command(ser, "a")
     info = {}
     try:
-        for i, l in enumerate(responses[1:]):
-            print(f'{i:3} {l}')
+        for l in responses[1:]:
             k,v = l.split(':')
-            info[k.replace(' ', '_')] = v
+            info[k.replace(' ', '_')] = v.strip()
         return info
     except Exception as e:
         print(f'Error processing info response: {e}')
@@ -61,7 +60,9 @@ def main(serial_port):
         # print(get_menu(ser))
         # set_time(ser)
         state = get_state(ser)
-        print("State:", state)
+        for i,k in enumerate(state):
+            v = state[k]
+            print(f'{i:3} {k}: {v} ')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Control a hydroponic system using a Raspberry Pi Pico.')
