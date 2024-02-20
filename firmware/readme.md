@@ -1,4 +1,4 @@
-![firmware](../images/firmware.webp)
+![firmware](../images/firmware.png)
 
 ## prepare the pico for micro python
 
