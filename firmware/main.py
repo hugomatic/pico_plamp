@@ -91,7 +91,7 @@ def timer_callback(timer=None):
 
     # save every 5 minute (so that systems keeps us with short power outages)
     if settings.current_time % 300 == 0:
-        write_data()
+        board.save_settings()
 
 
 def duration_timer_status(start_time, duration, current_time):
