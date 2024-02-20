@@ -18,9 +18,10 @@ if [ ! -e "$PICO_DEVICE" ]; then
     exit 1
 fi
 
+
 # Upload main.py to Pico using rshell
 echo "Uploading main.py to Pico..."
-rshell -p $PICO_DEVICE -f - << EOF
+rshell -p $PICO_DEVICE << EOF
 cp $MAIN_PY_PATH /pyboard/
 EOF
 
