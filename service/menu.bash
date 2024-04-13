@@ -6,8 +6,9 @@ commands=(
     "sudo systemctl start plamp_service"
     "sudo systemctl stop plamp_service"
     "rpicam-jpeg -o test.png"
-    "sudo apt-get install libraspberrypi-bin"
+    "sudo apt-get install libraspberrypi-bin nmap"
     "pip install -r requirements.txt"
+    "nmap -p 22 --open 192.168.1.0/24"
 )
 
 # Display the command menu
