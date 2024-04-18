@@ -6,9 +6,11 @@ commands=(
     "sudo systemctl start plamp_service"
     "sudo systemctl stop plamp_service"
     "libcamera-jpeg -o test.png"
+    "ls -1 | wc -l"
     "sudo apt-get install libraspberrypi-bin nmap"
     "pip install -r requirements.txt"
     "nmap -p 22 --open 192.168.1.0/24"
+    "ip a | grep 192.168.1"
 )
 
 # Display the command menu
