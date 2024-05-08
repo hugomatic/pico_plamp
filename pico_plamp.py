@@ -55,19 +55,24 @@ def connect(serial_port='/dev/ttyACM0', baud=9600, timeout=1):
     default_ser = ser
     return ser
 
-def main(serial_port):
+def main(serial_port, update_time=False):
     with connect(serial_port) as ser:
-        # print(get_menu(ser))
-        # set_time(ser)
+        if update_time:
+            set_time()
+        print(f"Getting current state of {serial_port}:")
         state = get_state(ser)
         for i,k in enumerate(state):
             v = state[k]
-            print(f'{i:3} {k}: {v} ')
+            print(f' {i:3} {k}: {v} ')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Control a hydroponic system using a Raspberry Pi Pico.')
     parser.add_argument('--serial_port', type=str, default='/dev/ttyACM0',
                         help='The serial port to use for communication with the Pico.')
+    # Add the optional --update-time argument
+    parser.add_argument('-u', '--update-time', action='store_true',
+                    help='Synchronizes the pico plamp time to the time of the host computer.')
+
     args = parser.parse_args()
-    main(args.serial_port)
+    main(args.serial_port, args.update_time)
 
