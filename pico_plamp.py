@@ -1,6 +1,7 @@
 import serial
 import time
 import argparse
+import datetime
 
 default_ser = None
 
@@ -20,8 +21,15 @@ def _send_command(ser_con, command):
     return response
 
 def set_time(time_override=None, ser=None):
-    current_time = int(time.time()) % 86400
-    if time_override is not None:
+    if time_override is None:
+        # current_time = int(time.time()) % 86400
+        # Get the current local datetime
+        now = datetime.datetime.now()
+        # Calculate seconds from midnight
+        seconds_from_midnight = int((now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds())
+        print(f"{now} seconds from midnight: {seconds_from_midnight}")
+        current_time = seconds_from_midnight
+    else:    
         current_time = time_override
     _send_command(ser, f"time {current_time}")
     return current_time
@@ -57,13 +65,19 @@ def connect(serial_port='/dev/ttyACM0', baud=9600, timeout=1):
 
 def main(serial_port, update_time=False):
     with connect(serial_port) as ser:
+        print(f"Connected to {serial_port}:")
         if update_time:
+            print("Updating pico plamp time")
             set_time()
-        print(f"Getting current state of {serial_port}:")
+        print(f"Getting current state:")
         state = get_state(ser)
-        for i,k in enumerate(state):
-            v = state[k]
-            print(f' {i:3} {k}: {v} ')
+        try:
+            for i,k in enumerate(state):
+                v = state[k]
+                print(f' {i:3} {k}: {v} ')
+        except:
+            print(f'{state=}')
+            raise
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Control a hydroponic system using a Raspberry Pi Pico.')
