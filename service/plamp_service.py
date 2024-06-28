@@ -11,7 +11,7 @@ def read_config():
 def take_picture(picture_directory):
     seconds_since_midnight = int(time.time())
     timestamp = datetime.now().strftime("%Y_%m_%d_%H:%M:%S")
-    filename = f"{seconds_since_midnight}_{timestamp}.png"
+    filename = f"{seconds_since_midnight}_{timestamp}.jpg"
     filepath = os.path.join(picture_directory, filename)
     captured = False
     try:
