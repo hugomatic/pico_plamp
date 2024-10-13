@@ -26,10 +26,12 @@ def set_time(time_override=None, ser=None):
         # Get the current local datetime
         now = datetime.datetime.now()
         # Calculate seconds from midnight
-        seconds_from_midnight = int((now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds())
-        print(f"{now} seconds from midnight: {seconds_from_midnight}")
+        midnight = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        seconds_from_midnight = int((now - midnight).total_seconds())
+        hours = seconds_from_midnight / 60 / 60
+        print(f"{now} seconds from midnight: {seconds_from_midnight} ({hours:.2f} h)")
         current_time = seconds_from_midnight
-    else:    
+    else:
         current_time = time_override
     _send_command(ser, f"time {current_time}")
     return current_time
